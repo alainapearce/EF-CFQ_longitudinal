@@ -86,4 +86,4 @@ ssib_data <- rbind.data.frame(brake_subset_data, reach_subset_data)
 
 ssib_flanker <- ssib_data[ssib_data[['test']] == 'flanker', ]
 ssib_listsort <- ssib_data[ssib_data[['test']] == 'listsort', ]
-#ssib_dccs <- ssib_data[ssib_data[['test']] == 'dcss', ]
+ssib_dccs <- ssib_data[ssib_data[['test']] == 'dccs', ]
