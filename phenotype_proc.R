@@ -22,7 +22,7 @@ library(lubridate)
 
 ## BRAKE ####
 # load data
-brake_pheno_data <- read.csv('data/brake_phenotype.csv', header = TRUE, , na.strings = c('NA', 'n/a'))
+brake_pheno_data <- read.csv('data/kyle_brake_phenotype.csv', header = TRUE, , na.strings = c('NA', 'n/a'))
 
 # clean nih toolbox data
 brake_nihtoolbox <- read.table('data/brake_nih_toolbox_scores.tsv', header = TRUE, sep ='\t', na.strings = c('NA', 'n/a'))
@@ -87,18 +87,18 @@ reach_data <- read.csv('data/reach_compiled.csv', header = TRUE, na.strings = c(
 # Reach 8 Brake 76 - keep R 8 (first)
 
 #brake prep
-brake_subset_data <- brake_data[c('participant_id', 'ses', 'demo_c_sex', 'demo_ethnicity', 'demo_race', 'age', 'c_height_avg_cm', 'c_weight_avg_kg', 'c_bmi', 'bmi_z', 'c_bmi_pcent', 'demo_mod_ed', 'demo_income', 'pds_score', 'pds_tanner_cat', 'cfq_resp', 'cfq_pcw', 'cfq_ppw', 'cfq_cwc', 'cfq_rest', 'cfq_pressure', 'cfq_mon', 'test', 'computed_score', 'uncorrected_ss', 'age_corrected_ss', 'national_percentile_age_adjusted', 'fully_corrected_t_score', 'study')]
+brake_subset_data <- brake_data[c('participant_id', 'ses', 'demo_c_sex', 'demo_ethnicity', 'demo_race', 'age', 'c_height_avg_cm', 'c_weight_avg_kg', 'c_bmi', 'bmi_z', 'c_bmi_pcent', 'demo_mod_ed', 'demo_income', 'tanner_choice', 'pds_score', 'pds_tanner_cat', 'cfq_resp', 'cfq_pcw', 'cfq_ppw', 'cfq_cwc', 'cfq_rest', 'cfq_pressure', 'cfq_mon', 'test', 'computed_score', 'uncorrected_ss', 'age_corrected_ss', 'national_percentile_age_adjusted', 'fully_corrected_t_score', 'study')]
 
-names(brake_subset_data) <- c('participant_id', 'session', 'sex', 'ethnicity', 'race', 'age', 'c_height_avg_cm', 'c_weight_avg_kg', 'c_bmi', 'bmi_z', 'c_bmi_pcent', 'mom_ed', 'income', 'pds_score', 'pds_tanner_cat', 'cfq_resp', 'cfq_pcw', 'cfq_ppw', 'cfq_cwc', 'cfq_rest', 'cfq_pressure', 'cfq_mon', 'test', 'computed_score', 'uncorrected_ss', 'age_corrected_ss', 'national_percentile_age_adjusted', 'fully_corrected_t_score', 'study')
+names(brake_subset_data) <- c('participant_id', 'session', 'sex', 'ethnicity', 'race', 'age', 'c_height_avg_cm', 'c_weight_avg_kg', 'c_bmi', 'bmi_z', 'c_bmi_pcent', 'mom_ed', 'income', 'tanner_choice', 'pds_score', 'pds_tanner_cat', 'cfq_resp', 'cfq_pcw', 'cfq_ppw', 'cfq_cwc', 'cfq_rest', 'cfq_pressure', 'cfq_mon', 'test', 'computed_score', 'uncorrected_ss', 'age_corrected_ss', 'national_percentile_age_adjusted', 'fully_corrected_t_score', 'study')
 
 brake_subset_data[['sex']] <- tolower(brake_subset_data[['sex']])
 
 brake_subset_data <- brake_subset_data[!(brake_subset_data[['participant_id']] %in% c(13, 18, 32, 40, 47, 55, 58, 62, 76)), ]
 
 # reach prep
-reach_subset_data <- reach_data[c('participant_id', 'session_id',  'sex', 'ethnicity', 'race', 'child_age', 'child_height_average', 'child_weight_average', 'child_bmi', 'child_bmi_z', 'child_bmi_p', 'demo_education_mom', 'demo_income', 'pds_score', 'pds_tanner_cat' , 'cfq_resp', 'cfq_pcw', 'cfq_ppw', 'cfq_cwc', 'cfq_rest', 'cfq_pressure', 'cfq_mon', 'test', 'computed_score', 'uncorrected_ss', 'age_corrected_ss', 'national_percentile_age_adjusted', 'fully_corrected_t_score', 'study')]
+reach_subset_data <- reach_data[c('participant_id', 'session_id',  'sex', 'ethnicity', 'race', 'child_age', 'child_height_average', 'child_weight_average', 'child_bmi', 'child_bmi_z', 'child_bmi_p', 'demo_education_mom', 'demo_income', 'tanner_choice', 'pds_score', 'pds_tanner_cat' , 'cfq_resp', 'cfq_pcw', 'cfq_ppw', 'cfq_cwc', 'cfq_rest', 'cfq_pressure', 'cfq_mon', 'test', 'computed_score', 'uncorrected_ss', 'age_corrected_ss', 'national_percentile_age_adjusted', 'fully_corrected_t_score', 'study')]
 
-names(reach_subset_data) <- c('participant_id', 'session', 'sex', 'ethnicity', 'race', 'age', 'c_height_avg_cm', 'c_weight_avg_kg', 'c_bmi', 'bmi_z', 'c_bmi_pcent', 'mom_ed', 'income', 'pds_score', 'pds_tanner_cat', 'cfq_resp', 'cfq_pcw', 'cfq_ppw', 'cfq_cwc', 'cfq_rest', 'cfq_pressure', 'cfq_mon', 'test', 'computed_score', 'uncorrected_ss', 'age_corrected_ss', 'national_percentile_age_adjusted', 'fully_corrected_t_score', 'study')
+names(reach_subset_data) <- c('participant_id', 'session', 'sex', 'ethnicity', 'race', 'age', 'c_height_avg_cm', 'c_weight_avg_kg', 'c_bmi', 'bmi_z', 'c_bmi_pcent', 'mom_ed', 'income', 'tanner_choice', 'pds_score', 'pds_tanner_cat', 'cfq_resp', 'cfq_pcw', 'cfq_ppw', 'cfq_cwc', 'cfq_rest', 'cfq_pressure', 'cfq_mon', 'test', 'computed_score', 'uncorrected_ss', 'age_corrected_ss', 'national_percentile_age_adjusted', 'fully_corrected_t_score', 'study')
 
 reach_subset_data[['participant_id']] <- as.numeric(sapply(reach_subset_data[['participant_id']], function(x) substr(x, unlist(gregexpr('-', x))+1, nchar(x))))
 
