@@ -22,10 +22,10 @@ library(lubridate)
 
 ## BRAKE ####
 # load data
-brake_pheno_data <- read.csv('data/brake_phenotype.csv', header = TRUE)
+brake_pheno_data <- read.csv('data/brake_phenotype.csv', header = TRUE, , na.strings = c('NA', 'n/a'))
 
 # clean nih toolbox data
-brake_nihtoolbox <- read.table('data/brake_nih_toolbox_scores.tsv', header = TRUE, sep ='\t')
+brake_nihtoolbox <- read.table('data/brake_nih_toolbox_scores.tsv', header = TRUE, sep ='\t', na.strings = c('NA', 'n/a'))
 
 brake_nihtoolbox[['participant_id']] <- as.numeric(sapply(brake_nihtoolbox[['sub']], function(x) substr(x, unlist(gregexpr('-', x))+1, nchar(x))))
 
@@ -54,9 +54,33 @@ brake_data <- merge(brake_pheno_data, brake_nihtoolbox[, !grepl('ses', names(bra
 brake_data[['study']] <- 'brake'
 
 ## REACH ####
-reach_data <- read.csv('data/reach_compiled.csv', header = TRUE)
+reach_data <- read.csv('data/reach_compiled.csv', header = TRUE, na.strings = c('NA', 'n/a'))
 
 ## merge ####
+
+# only had 15 follow-up reach NIH toolbox uploaded??
+
+# Reach 42 Brake 6 - keep B 6
+# Reach 61 Brake 1 - keep R 61
+# Reach 31 Brake 11 - no NIH for reach keep B 11
+# Reach 36 Brake 13 - keep B 13
+# Reach 27 Brake 16 - keep B 16
+# Reach 29 Brake 18 - keep B 29
+# Reach 86 Brake 26 - no NIH for reach keep B 26
+# Reach 13 Brake 32 - keep B 32
+# Reach 18 Brake 40 - keep B 40
+# Reach 21 Brake 47 - keep B 47
+# Reach 95 Brake 49 - no NIH for reach keep B 49
+# Reach 84 Brake 60 - keep B 60
+# Reach 32 Brake 55 - keep B 55
+# Reach 16 Brake 61 - keep B 61
+# Reach 55 Brake 58 - keep R 55
+# Reach 23 Brake 62 - keep B 62
+# Reach 93 Brake 65 - no NIH for reach keep B 65
+# Reach 28 Brake 43 - keep R 28
+# Reach 7 Brake 75 - keep B 75
+# Reach 8 Brake 76 - keep B 75
+
 #brake prep
 brake_subset_data <- brake_data[c('participant_id', 'ses', 'demo_c_sex', 'demo_ethnicity', 'demo_race', 'age', 'c_height_avg_cm', 'c_weight_avg_kg', 'c_bmi', 'bmi_z', 'c_bmi_pcent', 'demo_mod_ed', 'demo_income', 'pds_score', 'pds_tanner_cat', 'cfq_resp', 'cfq_pcw', 'cfq_ppw', 'cfq_cwc', 'cfq_rest', 'cfq_pressure', 'cfq_mon', 'test', 'computed_score', 'uncorrected_ss', 'age_corrected_ss', 'national_percentile_age_adjusted', 'fully_corrected_t_score', 'study')]
 
@@ -64,8 +88,10 @@ names(brake_subset_data) <- c('participant_id', 'session', 'sex', 'ethnicity', '
 
 brake_subset_data[['sex']] <- tolower(brake_subset_data[['sex']])
 
-brake_subset_data <- brake_subset_data[!(brake_subset_data[['participant_id']] %in% c(6, 13, 16, 18, 28, 32, 40, 47, 55, 58, 61, 62, 75, 76)), ]
+brake_subset_data <- brake_subset_data[!(brake_subset_data[['participant_id']] %in% c(1, 43, 58)), ]
 
+#cfq collected at both timepoints so if missing, then no followup
+brake_subset_data <- brake_subset_data[!is.na(brake_subset_data[['cfq_rest']]), ]
 
 # reach prep
 reach_subset_data <- reach_data[c('participant_id', 'session_id',  'sex', 'ethnicity', 'race', 'child_age', 'child_height_average', 'child_weight_average', 'child_bmi', 'child_bmi_z', 'child_bmi_p', 'demo_education_mom', 'demo_income', 'pds_score', 'pds_tanner_cat' , 'cfq_resp', 'cfq_pcw', 'cfq_ppw', 'cfq_cwc', 'cfq_rest', 'cfq_pressure', 'cfq_mon', 'test', 'computed_score', 'uncorrected_ss', 'age_corrected_ss', 'national_percentile_age_adjusted', 'fully_corrected_t_score', 'study')]
@@ -79,7 +105,7 @@ reach_subset_data[['race']] <- ifelse(reach_subset_data[['race']] == 'Other', 'O
 reach_subset_data[['session']] <- ifelse(reach_subset_data[['session']] == 'ses-1', 'baseline', 'followup')
 
 #remove REACH participants
-reach_subset_data <- reach_subset_data[!(reach_subset_data[['participant_id']] %in% c(31, 61, 84, 86, 95, 93)), ]
+reach_subset_data <- reach_subset_data[!(reach_subset_data[['participant_id']] %in% c(7, 8, 13, 16, 18, 21, 23, 27, 29, 31, 32, 36, 42, 61, 84, 86, 95, 93)), ]
 
 # combine
 ssib_data <- rbind.data.frame(brake_subset_data, reach_subset_data)
