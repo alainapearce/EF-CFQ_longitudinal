@@ -53,7 +53,28 @@ brake_pheno_data[['bmi_z']] <- round(childsds::sds(value = brake_pheno_data[["c_
 # merge with nihtoolbox
 brake_data <- merge(brake_pheno_data, brake_nihtoolbox[, !grepl('ses', names(brake_nihtoolbox))], by = 'participant_id', all = TRUE)
 
-brake_data[brake_data[['date_finished']] == '6/16/23 18:07', 'date_finished'] <- '2023-06-16'
+brake_data[grepl('1/17/23', brake_data[['date_finished']]), 'date_finished'] <- '2023-01-17'
+brake_data[grepl('2/8/23', brake_data[['date_finished']]), 'date_finished'] <- '2023-02-08'
+brake_data[grepl('2/27/23', brake_data[['date_finished']]), 'date_finished'] <- '2023-02-27'
+brake_data[grepl('4/19/23', brake_data[['date_finished']]), 'date_finished'] <- '2023-04-19'
+brake_data[grepl('5/30/23', brake_data[['date_finished']]), 'date_finished'] <- '2023-05-30'
+brake_data[grepl('2/23/23', brake_data[['date_finished']]), 'date_finished'] <- '2023-02-23'
+brake_data[grepl('5/27/23', brake_data[['date_finished']]), 'date_finished'] <- '2023-05-27'
+brake_data[grepl('5/4/23', brake_data[['date_finished']]), 'date_finished'] <- '2023-05-04'
+brake_data[grepl('5/10/23', brake_data[['date_finished']]), 'date_finished'] <- '2023-05-10'
+brake_data[grepl('6/9/23', brake_data[['date_finished']]), 'date_finished'] <- '2023-06-09'
+brake_data[grepl('6/16/23', brake_data[['date_finished']]), 'date_finished'] <- '2023-06-16'
+brake_data[grepl('7/27/23', brake_data[['date_finished']]), 'date_finished'] <- '2023-07-27'
+brake_data[grepl('7/20/23', brake_data[['date_finished']]), 'date_finished'] <- '2023-07-20'
+brake_data[grepl('1/13/23', brake_data[['date_finished']]), 'date_finished'] <- '2023-01-13'
+brake_data[grepl('10/2/23', brake_data[['date_finished']]), 'date_finished'] <- '2023-10-02'
+brake_data[grepl('2/1/23', brake_data[['date_finished']]), 'date_finished'] <- '2023-02-01'
+brake_data[grepl('10/19/23', brake_data[['date_finished']]), 'date_finished'] <- '2023-10-19'
+brake_data[grepl('12/18/23', brake_data[['date_finished']]), 'date_finished'] <- '2023-12-18'
+brake_data[grepl('10/27/23', brake_data[['date_finished']]), 'date_finished'] <- '2023-10-27'
+brake_data[grepl('7/19/23', brake_data[['date_finished']]), 'date_finished'] <- '2023-07-19'
+
+
 brake_data[['date_finished']] <- as.Date(brake_data[['date_finished']])
 
 brake_data[brake_data[['ses']] == 'followup', 'age'] <- month(as.period(interval(brake_data[brake_data[['ses']] == 'followup', 'demo_c_dob'], brake_data[brake_data[['ses']] == 'followup', 'date_finished']), unit = 'month'))/12
